@@ -149,7 +149,7 @@ export default {
       this.Page++
     },
     run () {
-      setTimeout(() => { this.save() }, 190000)
+      setTimeout(() => { this.save() }, 19000)
       this.Running = 1
     },
     save: async function () {
