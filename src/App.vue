@@ -1,28 +1,31 @@
 <template>
-  <div id="app">
-    <el-menu :default-active="activeIndex" mode="horizontal" router>
-      <el-menu-item index="home" :route="{ name:'home' }">Home</el-menu-item>
-      <el-menu-item index="history" :route="{ name:'history' }">History</el-menu-item>
-    </el-menu>
-    <router-view />
-  </div>
+  <v-app>
+    <v-app-bar color="deep-purple accent-4" app dark>
+      <router-link :to="{ path:'/'}">
+        <v-img alt="Logo" height="60" position="left" src="/static/img/logo.png" :transition="false" contain/>
+      </router-link>
+      <v-spacer/>
+      <router-link style="text-decoration: none" :to="{ path:'/', query: { src: 0 } }">
+        <v-btn text>
+          <span>Home</span>
+          <v-icon>mdi-home</v-icon>
+        </v-btn>
+      </router-link>
+      <router-link style="text-decoration: none" :to="{ path:'/history', query: { src: 0 } }">
+        <v-btn text>
+          <span>History</span>
+          <v-icon>mdi-history</v-icon>
+        </v-btn>
+      </router-link>
+    </v-app-bar>
+    <v-main>
+      <router-view />
+    </v-main>
+  </v-app>
 </template>
 
 <script>
 export default {
-  name: 'app',
-  data () {
-    return {
-      activeIndex: this.$route.name
-    }
-  }
+  name: 'App'
 }
 </script>
-
-<style scoped>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  text-align: center;
-  color: #2c3e50;
-}
-</style>

@@ -1,19 +1,37 @@
 <template>
-  <div class="history">
-    <section v-show="Flag">
-      <a id="score">{{ this.Score }}点:<br></a>
-      <a id="date">測定日時&nbsp;{{ this.Date }}<br></a>
-
-      <img :src="Graph1"/>
-      <img :src="Graph2"/>
-      <img :src="Graph3"/>
-    </section>
-
-    <footer>
-      <el-button id="previous" v-show="Page > 0" type="primary" @click="onPrevious">&lt;</el-button>
-      <el-button id="next" v-show="Page < Count" type="primary" @click="onNext">&gt;</el-button>
-    </footer>
-  </div>
+  <v-container>
+    <v-row align="center">
+      <v-col>
+        <v-btn color="primary" :disabled="Page < 1" @click="onPrevious" fab dark x-large>
+          <v-icon>mdi-arrow-left</v-icon>
+        </v-btn>
+      </v-col>
+      <v-col>
+        <v-row>
+          <v-col>
+            <p class="text-center text-h2 ma-2">{{ this.Score }}点</p>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <p class="text-center text-body-1 ma-n6">
+              測定日時&nbsp;{{ this.Date }}
+            </p>
+          </v-col>
+        </v-row>
+        <v-row v-for="(graph, i) in Graphs" :key="i">
+          <v-col>
+            <v-img :src="graph" :transition="false" contain />
+          </v-col>
+        </v-row>
+      </v-col>
+      <v-col>
+      <v-btn color="primary" :disabled="Page + 1 > Count" @click="onNext" fab dark x-large>
+        <v-icon>mdi-arrow-right</v-icon>
+      </v-btn>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -22,14 +40,11 @@ export default {
   name: 'history',
   data () {
     return {
-      Flag: 0,
       Page: 0,
       Count: 0,
       Score: 0,
       Date: '',
-      Graph1: '',
-      Graph2: '',
-      Graph3: ''
+      Graphs: ['', '', '']
     }
   },
   mounted () {
@@ -45,8 +60,6 @@ export default {
       this.updataData()
     },
     updataData: async function () {
-      this.Flag = 0
-
       const response = await axios.get('http://localhost:5000/history/' + this.Page)
       const data = response.data
       this.Count = data.count - 1
@@ -56,38 +69,11 @@ export default {
       const blob1 = new Blob([Uint8Array.from(data.ch1)], { type: 'image/png' })
       const blob2 = new Blob([Uint8Array.from(data.ch2)], { type: 'image/png' })
       const blob3 = new Blob([Uint8Array.from(data.ch3)], { type: 'image/png' })
-      this.Graph1 = window.URL.createObjectURL(blob1)
-      this.Graph2 = window.URL.createObjectURL(blob2)
-      this.Graph3 = window.URL.createObjectURL(blob3)
 
-      this.Flag = 1
+      this.Graphs[0] = window.URL.createObjectURL(blob1)
+      this.Graphs[1] = window.URL.createObjectURL(blob2)
+      this.Graphs[2] = window.URL.createObjectURL(blob3)
     }
   }
 }
 </script>
-
-<style scoped>
-#score{
-  font-size: xx-large;
-}
-#date{
-  font-size: small;
-}
-footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 200px;
-}
-#previous{
-  float: left;
-  margin: 0 0 0 50px;
-  font-size: 100px;
-}
-#next{
-  float: right;
-  margin: 0 50px 0 0;
-  font-size: 100px;
-}
-</style>
