@@ -1,34 +1,32 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row align="center">
       <v-col>
-        <v-btn color="primary" @click="onPrevious" fab dark x-large>
+        <v-btn color="primary" :disabled="Page < 1" @click="onPrevious" fab dark x-large>
           <v-icon>mdi-arrow-left</v-icon>
         </v-btn>
       </v-col>
       <v-col>
-        <v-container>
-          <v-row>
-            <v-col>
-              <p class="text-center text-h2 ma-2">{{ this.Score }}点</p>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <p class="text-center text-body-1 ma-n6">
-                測定日時&nbsp;{{ this.Date }}
-              </p>
-            </v-col>
-          </v-row>
-          <v-row v-for="(graph, i) in Graphs" :key="i">
-            <v-col>
-              <v-img :src="graph" :transition="false" contain />
-            </v-col>
-          </v-row>
-        </v-container>
+        <v-row>
+          <v-col>
+            <p class="text-center text-h2 ma-2">{{ this.Score }}点</p>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <p class="text-center text-body-1 ma-n6">
+              測定日時&nbsp;{{ this.Date }}
+            </p>
+          </v-col>
+        </v-row>
+        <v-row v-for="(graph, i) in Graphs" :key="i">
+          <v-col>
+            <v-img :src="graph" :transition="false" contain />
+          </v-col>
+        </v-row>
       </v-col>
       <v-col>
-      <v-btn color="primary" @click="onNext" fab dark x-large>
+      <v-btn color="primary" :disabled="Page + 1 > Count" @click="onNext" fab dark x-large>
         <v-icon>mdi-arrow-right</v-icon>
       </v-btn>
       </v-col>
