@@ -1,5 +1,5 @@
 <template>
-  <v-carousel :show-arrows="!Running" :continuous="false" height="900" hide-delimiters>
+  <v-carousel :show-arrows="!running" :continuous="false" height="900" hide-delimiters>
     <template v-slot:prev="{ on, attrs }">
       <v-btn color="primary" v-bind="attrs" v-on="on" fab dark x-large>
         <v-icon>mdi-arrow-left</v-icon>
@@ -11,7 +11,7 @@
       </v-btn>
     </template>
     <v-carousel-item v-for="([str, img], i) in items[this.$route.query.mode]" :key="i">
-      <v-container v-if="!Running">
+      <v-container v-if="!running">
         <v-row>
           <v-col>
             <p class="text-center text-h1 mt-2 mb-2" v-text="str"/>
@@ -39,7 +39,7 @@
         </v-row>
         <v-row>
           <v-col>
-            <video height="800" width="1761" src="/static/img/Idea2.mp4" autoplay></video>
+            <video height="800" width="1761" :src="mov" autoplay></video>
           </v-col>
         </v-row>
       </v-container>
@@ -53,30 +53,31 @@ export default {
   name: 'measurement',
   data () {
     return {
-      Running: 0,
+      running: 0,
+      mov: '',
       items: [
         [
-          ['センサ全体図', '/static/img/DSC05837.jpg'],
-          ['センサ1の位置', '/static/img/DSC05844.jpg'],
-          ['センサ2の位置', '/static/img/DSC05841.jpg'],
-          ['センサ3の位置', '/static/img/DSC05847.jpg'],
-          ['測定方法', '/static/img/Idea2.mp4'],
+          ['センサ全体図', '/static/img/0_0.JPG'],
+          ['センサ1の位置', '/static/img/0_1.JPG'],
+          ['センサ2の位置', '/static/img/0_2.JPG'],
+          ['センサ3の位置', '/static/img/0_3.JPG'],
+          ['測定方法', '/static/img/0_m.mp4'],
           ['測定を開始できます', '']
         ],
         [
-          ['センサ全体図', '/static/img/DSC05837.jpg'],
-          ['センサ1の位置', '/static/img/DSC05844.jpg'],
-          ['センサ2の位置', '/static/img/DSC05841.jpg'],
-          ['センサ3の位置', '/static/img/DSC05847.jpg'],
-          ['測定方法', '/static/img/Idea2.mp4'],
+          ['センサ全体図', '/static/img/1_0.JPG'],
+          ['センサ1の位置', '/static/img/1_1.JPG'],
+          ['センサ2の位置', '/static/img/1_2.JPG'],
+          ['センサ3の位置', '/static/img/1_3.JPG'],
+          ['測定方法', '/static/img/1_m.mp4'],
           ['測定を開始できます', '']
         ],
         [
-          ['センサ全体図', '/static/img/DSC05837.jpg'],
-          ['センサ1の位置', '/static/img/DSC05844.jpg'],
-          ['センサ2の位置', '/static/img/DSC05841.jpg'],
-          ['センサ3の位置', '/static/img/DSC05847.jpg'],
-          ['測定方法', '/static/img/Idea2.mp4'],
+          ['センサ全体図', '/static/img/2_0.JPG'],
+          ['センサ1の位置', '/static/img/2_1.JPG'],
+          ['センサ2の位置', '/static/img/2_2.JPG'],
+          ['センサ3の位置', '/static/img/2_3.JPG'],
+          ['測定方法', '/static/img/2_m.mp4'],
           ['測定を開始できます', '']
         ]
       ]
@@ -84,8 +85,9 @@ export default {
   },
   methods: {
     run () {
-      setTimeout(this.save, 19000)
-      this.Running = 1
+      this.mov = 'static/img/' + this.$route.query.mode + '_m3.mp4'
+      setTimeout(this.save, 20000)
+      this.running = 1
     },
     save: async function () {
       await axios.get('http://localhost:5000/save/' + this.$route.query.mode)
