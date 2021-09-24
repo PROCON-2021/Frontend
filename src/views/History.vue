@@ -65,6 +65,7 @@ export default {
       const data = response.data
       this.Count = data.count - 1
       this.Score = data.score
+      this.Info = data.class
       this.Date = data.date
 
       const blob1 = new Blob([Uint8Array.from(data.ch1)], { type: 'image/png' })
