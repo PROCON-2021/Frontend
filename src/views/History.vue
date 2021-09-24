@@ -9,7 +9,7 @@
       <v-col>
         <v-row>
           <v-col>
-            <p class="text-center text-h2 ma-2">{{ this.Score }}点</p>
+            <p class="text-center text-h2 ma-2">{{ this.Score }}点:{{ this.Info }}</p>
           </v-col>
         </v-row>
         <v-row>
@@ -43,6 +43,7 @@ export default {
       Page: 0,
       Count: 0,
       Score: 0,
+      Info: '',
       Date: '',
       Graphs: ['', '', '']
     }
