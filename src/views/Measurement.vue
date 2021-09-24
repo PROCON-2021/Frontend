@@ -1,5 +1,5 @@
 <template>
-  <v-carousel :show-arrows="!running" :continuous="false" height="900" hide-delimiters>
+  <v-carousel :show-arrows="!Running" :continuous="false" height="900" hide-delimiters>
     <template v-slot:prev="{ on, attrs }">
       <v-btn color="primary" v-bind="attrs" v-on="on" fab dark x-large>
         <v-icon>mdi-arrow-left</v-icon>
@@ -10,8 +10,8 @@
         <v-icon>mdi-arrow-right</v-icon>
       </v-btn>
     </template>
-    <v-carousel-item v-for="([str, img], i) in items[this.$route.query.mode]" :key="i">
-      <v-container v-if="!running">
+    <v-carousel-item v-for="([str, img], i) in Items[this.$route.query.mode]" :key="i">
+      <v-container v-if="!Running">
         <v-row>
           <v-col>
             <p class="text-center text-h1 mt-2 mb-2" v-text="str"/>
@@ -39,7 +39,7 @@
         </v-row>
         <v-row>
           <v-col>
-            <video height="800" width="1761" :src="mov" autoplay></video>
+            <video height="800" width="1761" :src="Mov" autoplay></video>
           </v-col>
         </v-row>
       </v-container>
@@ -53,9 +53,9 @@ export default {
   name: 'measurement',
   data () {
     return {
-      running: 0,
-      mov: '',
-      items: [
+      Running: 0,
+      Mov: '',
+      Items: [
         [
           ['センサ全体図', '/static/img/0_0.JPG'],
           ['センサ1の位置', '/static/img/0_1.JPG'],
@@ -85,9 +85,9 @@ export default {
   },
   methods: {
     run () {
-      this.mov = 'static/img/' + this.$route.query.mode + '_m3.mp4'
+      this.Mov = 'static/img/' + this.$route.query.mode + '_m3.mp4'
       setTimeout(this.save, 20000)
-      this.running = 1
+      this.Running = 1
     },
     save: async function () {
       await axios.get('http://localhost:5000/save/' + this.$route.query.mode)
