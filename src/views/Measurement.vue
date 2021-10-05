@@ -86,7 +86,7 @@ export default {
   methods: {
     run () {
       this.Mov = 'static/img/' + this.$route.query.mode + '_m3.mp4'
-      setTimeout(this.save, 20000)
+      setTimeout(this.save, 19000)
       this.Running = 1
     },
     save: async function () {
