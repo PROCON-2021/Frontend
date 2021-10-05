@@ -91,7 +91,7 @@ export default {
     },
     save: async function () {
       await axios.get('http://localhost:5000/save/' + this.$route.query.mode)
-      document.location = '/history'
+      document.location = '/history?r=true'
     }
   }
 }

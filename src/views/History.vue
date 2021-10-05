@@ -2,7 +2,7 @@
   <v-container>
     <v-row align="center">
       <v-col>
-        <v-btn color="primary" :disabled="Page < 1" @click="onPrevious" fab dark x-large>
+        <v-btn color="primary" :disabled="(Page < 1) || this.$route.query.r" @click="onPrevious" fab dark x-large>
           <v-icon>mdi-arrow-left</v-icon>
         </v-btn>
       </v-col>
@@ -26,7 +26,7 @@
         </v-row>
       </v-col>
       <v-col>
-      <v-btn color="primary" :disabled="Page + 1 > Count" @click="onNext" fab dark x-large>
+      <v-btn color="primary" :disabled="(Page + 1 > Count) || this.$route.query.r" @click="onNext" fab dark x-large>
         <v-icon>mdi-arrow-right</v-icon>
       </v-btn>
       </v-col>
